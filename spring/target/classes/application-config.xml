@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<bean id="helloService" class="study.spring.myapp.hello.service.HelloService" />
+	
+	<bean id="helloController" class="study.spring.myapp.hello.controller.HelloController">
+		<constructor-arg ref="helloService" />
+		<property name="helloService" ref="helloService" />
+	</bean>
+	
+	<bean id="personBean" class="study.spring.myapp.member.Person">
+		<property name="name" value="Jiyoung" />
+		<property name="age" value="20" />
+	</bean>
+
+
+
+	<context:component-scan base-package="study.spring.myapp.hello" />
+	<context:component-scan base-package="study.spring.myapp" />
+	
+	<aop:config>
+		<aop:pointcut id="printTime" expression="execution(* study.spring.myapp.hello.service.HelloService.sayHello())" />
+			<aop:aspect ref="helloTime">
+				<aop:before pointcut-ref="printTime" method="timeLog" />
+			</aop:aspect>
+			<aop:aspect ref="timeTracer">
+				<aop:around pointcut-ref="printTime" method="trace" />
+			</aop:aspect>
+	</aop:config>
+	
+	<context:property-placeholder location="classpath:db/jdbc.properties" />
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+
+</beans>
+
+
+
+
+
+
+ 
