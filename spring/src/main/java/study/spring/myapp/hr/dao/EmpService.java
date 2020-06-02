@@ -36,26 +36,24 @@ public class EmpService implements IEmpService {
 
 	@Override
 	public void updateEmp(EmpVO emp) {
+		empRepository.deleteJobHistory(emp.getEmployeeId());
 		empRepository.updateEmp(emp);
-		
 	}
 
 	@Override
 	public void insertEmp(EmpVO emp) {
 		empRepository.insertEmp(emp);
-		
 	}
 
 	@Override
 	public void deleteEmp(int empId) {
+		empRepository.deleteJobHistory(empId);
 		empRepository.deleteEmp(empId);
-		
 	}
 
 	@Override
 	public void deleteJobHistory(int empId) {
 		empRepository.deleteJobHistory(empId);
-		
 	}
 
 	@Override

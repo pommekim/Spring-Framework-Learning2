@@ -15,6 +15,9 @@ public class EmpMain {
 		System.out.println(empService.getEmpCount(30));
 		System.out.println(empService.getEmpList());
 		System.out.println(empService.getAllManagerId());
+		
+		empService.updateEmp(empService.getEmpInfo(108));
+		
 		context.close();
 	}
 

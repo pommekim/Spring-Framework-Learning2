@@ -93,18 +93,21 @@ public class EmpRepository implements IEmpRepository {
 		jdbcTemplate.update(sql, empId);
 	}
 	
+	@Override
 	public List<Map<String, Object>> getAllDeptId() {
 		String sql = "select department_id as departmentId, "
 				+ "department_name as departmentName from departments";
 		return jdbcTemplate.queryForList(sql);
 	}
 	
+	@Override
 	public List<Map<String, Object>> getAllJobId() {
 		String sql = "select job_id as jobId, job_title as jobTitle "
 				+ "from jobs";
 		return jdbcTemplate.queryForList(sql);
 	}
 	
+	@Override
 	public List<Map<String, Object>> getAllManagerId() {
 		String sql = "select employee_id as managerId, "
 				+ "first_name||' '||last_name as managerName "
@@ -113,6 +116,8 @@ public class EmpRepository implements IEmpRepository {
 				+ "(select distinct manager_id from employees)";
 		return jdbcTemplate.queryForList(sql);
 	}
+	
+	
 	
 	public DeptVO getDeptInfo(int deptId) {
 		String sql = "select * from departments where department_id=?";
