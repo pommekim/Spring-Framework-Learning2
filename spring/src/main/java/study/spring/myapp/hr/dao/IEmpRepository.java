@@ -18,5 +18,8 @@ public interface IEmpRepository {
 	List<Map<String,Object>> getAllDeptId();
 	List<Map<String,Object>> getAllJobId();
 	List<Map<String,Object>> getAllManagerId();
+	
+	//부서별로 최고 급여자
+	List<EmpVO> getHigherSalary();
 
 }

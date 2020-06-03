@@ -18,6 +18,8 @@ public class EmpMain {
 		
 		empService.updateEmp(empService.getEmpInfo(108));
 		
+		System.out.println(empService.getHigherSalary());
+		
 		context.close();
 	}
 

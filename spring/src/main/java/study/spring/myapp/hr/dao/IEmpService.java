@@ -19,4 +19,5 @@ public interface IEmpService {
 	List<Map<String,Object>> getAllJobId();
 	List<Map<String,Object>> getAllManagerId();
 	
+	List<EmpVO> getHigherSalary();
 }

@@ -70,6 +70,12 @@ public class EmpService implements IEmpService {
 	public List<Map<String, Object>> getAllManagerId() {
 		return empRepository.getAllManagerId();
 	}
+
+	@Override
+	public List<EmpVO> getHigherSalary() {
+		return empRepository.getHigherSalary();
+	}
+	
 	
 
 }

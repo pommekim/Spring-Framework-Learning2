@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import study.spring.myapp.hr.model.DeptVO;
 import study.spring.myapp.hr.model.EmpVO;
@@ -72,16 +73,18 @@ public class EmpRepository implements IEmpRepository {
 	}
 	
 	@Override
+	@Transactional("txManager")
 	public void updateEmp(EmpVO emp) {
 		String sql = "update employees set first_name=?, last_name=?, email=?, "
 				+ "phone_number=?, hire_date=?, job_id=?, salary=?, commission_pct=?, "
 				+ "manager_id=?, department_id=? where employee_id=?";
-		jdbcTemplate.update(sql, emp.getEmployeeId(), emp.getFirstName(), emp.getLastName(),
-				emp.getEmail(), emp.getPhoneNumber(), emp.getJobId(), emp.getSalary(),
-				emp.getCommissionPct(), emp.getManagerId(), emp.getDepartmentId());
+		jdbcTemplate.update(sql, emp.getFirstName(), emp.getLastName(),
+				emp.getEmail(), emp.getPhoneNumber(), emp.getHireDate(), emp.getJobId(), emp.getSalary(),
+				emp.getCommissionPct(), emp.getManagerId(), emp.getDepartmentId(), emp.getEmployeeId());
 	}
 	
 	@Override
+	@Transactional("txManager")
 	public void deleteEmp(int empId) {
 		String sql = "delete from employees where employee_id=?";
 		jdbcTemplate.update(sql, empId);
@@ -135,6 +138,17 @@ public class EmpRepository implements IEmpRepository {
 					}
 			
 		});
+	}
+
+	
+	
+	@Override
+	public List<EmpVO> getHigherSalary() {
+		String sql = "select * from employees e " + 
+				"where (e.department_id, e.salary) in " + 
+				"(select department_id, max(salary) from employees " + 
+				"group by department_id)";
+		return jdbcTemplate.query(sql, new EmpMapper());
 	}
 	
 	
