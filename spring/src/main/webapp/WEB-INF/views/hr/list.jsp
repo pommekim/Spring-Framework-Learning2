@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +24,7 @@
 		<th>Manager_id</th>
 		<th>Department_id</th>
 	</tr>
-	<c:forEach var="emp" items="${empList}">
+	<c:forEach var="emp" items="${higherList}">
 	<tr>
 		<td><a href="${emp.employeeId}">${emp.employeeId}</a></td>
 		<td>${emp.firstName}</td>

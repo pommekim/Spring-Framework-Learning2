@@ -55,8 +55,4 @@
 	<level value="info" />
 	</logger>
 	
-	<logger name="jdbc.audit">
-	<level value="info" />
-	</logger>
-	
 </log4j:configuration>
