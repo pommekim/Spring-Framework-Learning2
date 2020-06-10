@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -18,6 +19,7 @@ import study.spring.myapp.hr.model.EmpVO;
 public class EmpRepository implements IEmpRepository {
 	
 	@Autowired
+	@Qualifier("jdbcTemplate")
 	JdbcTemplate jdbcTemplate;
 	
 	public class EmpMapper implements RowMapper<EmpVO> {
@@ -149,6 +151,13 @@ public class EmpRepository implements IEmpRepository {
 				"(select department_id, max(salary) from employees " + 
 				"group by department_id)";
 		return jdbcTemplate.query(sql, new EmpMapper());
+	}
+
+	@Override
+	public void updateManager(int empId) {
+		String sql = "update employees e set e.manager_id=null where manager_id=(select employee_id from employees where employee_id=?)";
+		jdbcTemplate.update(sql, empId);
+		
 	}
 	
 	

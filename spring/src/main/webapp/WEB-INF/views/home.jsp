@@ -11,7 +11,5 @@
 
 <P>  The time on the server is ${serverTime}. </P>
 
-${higherSalary}
-
 </body>
 </html>

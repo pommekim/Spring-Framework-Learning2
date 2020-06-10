@@ -3,6 +3,7 @@ package study.spring.myapp.hr.dao;
 import java.util.List;
 import java.util.Map;
 
+import study.spring.myapp.hr.model.DeptVO;
 import study.spring.myapp.hr.model.EmpVO;
 
 public interface IEmpRepository {
@@ -21,5 +22,8 @@ public interface IEmpRepository {
 	
 	//부서별로 최고 급여자
 	List<EmpVO> getHigherSalary();
+	
+	DeptVO getDeptInfo(int deptId);
+	void updateManager(int empId);
 
 }

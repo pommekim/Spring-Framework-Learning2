@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import study.spring.myapp.hr.model.DeptVO;
 import study.spring.myapp.hr.model.EmpVO;
 
 @Service
@@ -74,6 +75,16 @@ public class EmpService implements IEmpService {
 	@Override
 	public List<EmpVO> getHigherSalary() {
 		return empRepository.getHigherSalary();
+	}
+
+	@Override
+	public DeptVO getDeptInfo(int deptId) {
+		return empRepository.getDeptInfo(deptId);
+	}
+
+	@Override
+	public void updateManager(int empId) {
+		empRepository.updateManager(empId);
 	}
 	
 	

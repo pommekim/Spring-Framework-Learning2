@@ -24,7 +24,7 @@
 		<th>Manager_id</th>
 		<th>Department_id</th>
 	</tr>
-	<c:forEach var="emp" items="${higherList}">
+	<c:forEach var="emp" items="${empList}">
 	<tr>
 		<td><a href="${emp.employeeId}">${emp.employeeId}</a></td>
 		<td>${emp.firstName}</td>

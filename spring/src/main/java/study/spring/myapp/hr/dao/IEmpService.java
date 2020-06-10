@@ -3,6 +3,7 @@ package study.spring.myapp.hr.dao;
 import java.util.List;
 import java.util.Map;
 
+import study.spring.myapp.hr.model.DeptVO;
 import study.spring.myapp.hr.model.EmpVO;
 
 public interface IEmpService {
@@ -20,4 +21,7 @@ public interface IEmpService {
 	List<Map<String,Object>> getAllManagerId();
 	
 	List<EmpVO> getHigherSalary();
+	
+	DeptVO getDeptInfo(int deptId);
+	void updateManager(int empId);
 }
