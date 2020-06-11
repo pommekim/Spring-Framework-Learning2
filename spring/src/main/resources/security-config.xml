@@ -5,21 +5,30 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<!-- 기본 설정 -->
-	<security:http auto-config="true" use-expressions="true">
-		<security:intercept-url pattern="/hr/delete" access="hasRole('ROLE_MEMBER')"/>
-		<security:intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
-		<security:form-login/>
-		<security:logout/>
+	<security:http pattern="/resources/**" security="none" />
+	<security:http>
+		<security:intercept-url pattern="/hr/delete" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/hr/*" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')" />
+		<security:form-login login-page="/login"	
+		username-parameter="id"
+		password-parameter="pw"
+		login-processing-url="/loginCheck"
+		default-target-url="/loginCheck"
+		authentication-failure-url="/loginCheck" />
+		<security:logout logout-url="/logout" />
+		<security:access-denied-handler error-page="/error/autherror" />
+		<security:csrf disabled="true" />
+		<security:session-management>
+			<security:concurrency-control max-sessions="1" expired-url="/error/loginDuplicate"/>
+		</security:session-management>
+		
+		<bean id="memberAuthenticationProvider"
+		class="study.spring.myapp.member.auth.MemberAuthenticationProvider" />
+		
+		<security:authentication-manager>
+			<security:authentication-provider ref="memberAuthenticationProvider" />
+		</security:authentication-manager>
+		
 	</security:http>
-	
-	<!-- 인증처리 담당 -->
-	<security:authentication-manager>
-		<security:authentication-provider>
-			<security:user-service>
-				<security:user name="abc" password="abc" authorities="ROLE_USER"/>
-			</security:user-service>
-		</security:authentication-provider>
-	</security:authentication-manager>
 
 </beans>

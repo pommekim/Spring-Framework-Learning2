@@ -5,9 +5,11 @@ import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.stereotype.Repository;
 
 import study.spring.myapp.member.model.MemberVO;
 
+@Repository
 public class MemberRepository implements IMemberRepository {
 	
 	@Autowired

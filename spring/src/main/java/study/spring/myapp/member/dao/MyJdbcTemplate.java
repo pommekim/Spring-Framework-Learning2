@@ -10,7 +10,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MyJdbcTemplate extends JdbcTemplate {
 	
 	public MyJdbcTemplate(DataSource datasource) {
@@ -30,7 +32,6 @@ public class MyJdbcTemplate extends JdbcTemplate {
 	
 	public <T> T queryForNullableObject(String sql, Class<T> requiredType, Object...args) throws DataAccessException {
 		return this.queryForNullableObject(sql, new RowMapper<T>() {
-			
 			@Override
 			public T mapRow(ResultSet rs, int rowNum) throws SQLException {
 				T result = (T)rs.getObject(1);

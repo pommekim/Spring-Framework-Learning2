@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class TimeTracer {
 	
-	@Around(value="within(study..*.IEmpService+)")
+	@Around(value="within(study.spring.myapp.hello..*.IEmpService+)")
 	public Object trace(ProceedingJoinPoint joinPoint) throws Throwable {
 		Signature s = joinPoint.getSignature();
 		String methodName = s.getName();

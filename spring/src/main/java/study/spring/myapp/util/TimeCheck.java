@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class TimeCheck {
 	
-	@Pointcut(value="execution(* study..*.*(..))")
+	@Pointcut(value="execution(* study.spring.myapp.hello..*.*(..))")
 	private void txPointcut() {}
 	
 	@Before("txPointcut()")

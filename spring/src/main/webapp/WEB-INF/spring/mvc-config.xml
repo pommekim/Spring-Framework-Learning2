@@ -25,7 +25,10 @@
 	
 	<mvc:view-controller path="/" view-name="home" />
 	
+<!-- 	<mvc:view-controller path="/login" view-name="login" /> -->
+	
 	<context:component-scan base-package="study.spring.myapp.hr.controller" />
+	<context:component-scan base-package="study.spring.myapp.member.controller" />
 	
 
 </beans>

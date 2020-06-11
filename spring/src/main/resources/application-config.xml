@@ -24,17 +24,6 @@
 	
 	
 	
-	<aop:config>
-		<aop:pointcut id="printTime" expression="execution(* study.spring.myapp.hello.service.HelloService.sayHello(..))" />
-			<aop:aspect ref="helloTime">
-				<aop:before pointcut-ref="printTime" method="timeLog" />
-			</aop:aspect>
-			<aop:aspect ref="timeTracer">
-				<aop:around pointcut-ref="printTime" method="trace" />
-			</aop:aspect>
-	</aop:config>
-	
-	
 	
 	<context:property-placeholder location="classpath:db/jdbc.properties" />
 	
@@ -73,6 +62,10 @@
 	
 	<context:component-scan base-package="study.spring.myapp" />
 	<aop:aspectj-autoproxy />
+	
+	
+	
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 
 
