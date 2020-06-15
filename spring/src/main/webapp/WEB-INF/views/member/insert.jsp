@@ -9,33 +9,27 @@
 <body>
 
 	<h2>회원 가입</h2>
-	
 	<form action="insert" method="post">
 		<table border="1">
 			<tr>
 				<td>아이디</td><td><input type="text" name="userId"></td>
 			</tr>
-			<br>
 			<tr>
 				<td>이름</td><td><input type="text" name="name"></td>
 			</tr>
-			<br>
 			<tr>
 				<td>비밀번호</td><td><input type="password" name="password"></td>
 			</tr>
-			<br>
 			<tr>
 				<td>이메일</td><td><input type="text" name="email"></td>
 			</tr>
-			<br>
 			<tr>
 				<td>주소</td><td><input type="text" name="address"></td>
 			</tr>
-			<br>
-			<tr><td>
-			<input type="submit" value="확인">
-			</td></tr>
 		</table>
+		
+		<input type="submit" value="확인">
+		<input type="reset" value="취소">
 	</form>
 
 </body>

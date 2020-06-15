@@ -35,7 +35,7 @@ public class MemberAuthenticationProvider implements AuthenticationProvider {
 		MemberVO member = memberService.getMember(userId);
 		UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(userId, password, member.getAuthorities());
 		result.setDetails(member);
-		return null;
+		return result;
 		
 	}
 

@@ -25,8 +25,6 @@ public class EmpController {
 	@Autowired
 	IEmpService empService;
 	
-	
-	
 	@RequestMapping("/count")
 	public String empCount(@RequestParam(value="deptId", required=false, defaultValue="0") int deptId, Model model) {
 		if(deptId == 0) {
@@ -146,6 +144,10 @@ public class EmpController {
 		empService.deleteEmp(empId);
 		return "redirect:/hr/list";
 	}
+	
+	//index
+	@RequestMapping("/index")
+	public void index(Model model) {}
 	
 	
 	

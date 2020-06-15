@@ -30,5 +30,12 @@
 	<context:component-scan base-package="study.spring.myapp.hr.controller" />
 	<context:component-scan base-package="study.spring.myapp.member.controller" />
 	
+	<mvc:interceptors>
+  		<mvc:interceptor>
+    		<mvc:mapping path="/**" />
+    		<bean class="study.spring.myapp.common.interceptor.LoginInterceptor" />
+  		</mvc:interceptor>
+	</mvc:interceptors>
+	
 
 </beans>
