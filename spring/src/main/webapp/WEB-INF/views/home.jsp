@@ -17,7 +17,7 @@
 <a href="hr/index">인사 관리</a> <br>
 
 <sec:authorize access="isAnonymous()">
-  <a href="member/login">로그인</a> <br>
+  <a href="login">로그인</a> <br>
 </sec:authorize>
 
 <sec:authorize access="isAuthenticated()">

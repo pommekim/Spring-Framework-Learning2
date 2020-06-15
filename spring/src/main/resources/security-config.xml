@@ -5,6 +5,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
+	<bean id="loginFailHandler" class="study.spring.myapp.member.auth.LoginFailHandler" />
+	
 	<security:http pattern="/resources/**" security="none" />
 	
 	<security:http>
@@ -15,7 +17,7 @@
 		password-parameter="pw"
 		login-processing-url="/loginCheck"
 		default-target-url="/loginCheck"
-		authentication-failure-url="/loginCheck" />
+		authentication-failure-handler-ref="loginFailHandler" />
 		<security:logout logout-url="/logout" />
 		<security:access-denied-handler error-page="/error/autherror" />
 		<security:csrf disabled="true" />

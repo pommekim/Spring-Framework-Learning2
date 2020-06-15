@@ -25,6 +25,7 @@ public class EmpController {
 	@Autowired
 	IEmpService empService;
 	
+	//사원수 체크
 	@RequestMapping("/count")
 	public String empCount(@RequestParam(value="deptId", required=false, defaultValue="0") int deptId, Model model) {
 		if(deptId == 0) {
@@ -35,6 +36,7 @@ public class EmpController {
 		return "hr/count";
 	}
 	
+	//전체 사원 리스트
 	//들어오는 주소 값과 반환하는 주소 값이 같으면 리턴타입을 void로 바꾸고 리턴 주소값을 안 넣어줘도 됨!!!
 	@RequestMapping("/list")
 	public void getAllEmployees(Model model) {
@@ -42,14 +44,13 @@ public class EmpController {
 		model.addAttribute("empList", empList);
 	}
 	
+	//사원 번호별 상세보기
 	@RequestMapping("/{employeeId}")
 	public String getEmployees(@PathVariable int employeeId, Model model) {
 		EmpVO emp = empService.getEmpInfo(employeeId);
 		model.addAttribute("emp", emp);
 		return "hr/view";
 	}
-	
-	
 	
 	//입력 메서드
 	@GetMapping("/insert")
@@ -68,43 +69,13 @@ public class EmpController {
 		return "redirect:/hr/list";
 	}
 	
-	
-	
+	//부서별 최고 급여 리스트
 	@RequestMapping("/higherSalary")
 	public String getHigherSalary(Model model) {
 		List<EmpVO> higherList = empService.getHigherSalary();
 		model.addAttribute("higherList", higherList);
 		return "hr/list";
 	}
-	
-	
-	
-//	//입력 메서드
-//	@GetMapping("/insert")
-//	public void insertEmp(Model model) {
-//		model.addAttribute("emp", new EmpVO());
-//		model.addAttribute("jobList", empService.getAllJobId());
-//		model.addAttribute("manList", empService.getAllManagerId());
-//		model.addAttribute("deptList", empService.getAllDeptId());
-//		model.addAttribute("message", "insert");
-//	}
-//	
-//	@PostMapping("/insert")
-//	public String insertEmp(@ModelAttribute("emp") @Valid EmpVO emp, 
-//			BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-//		if(result.hasErrors()) {
-//			model.addAttribute("jobList", empService.getAllJobId());
-//			model.addAttribute("manList", empService.getAllManagerId());
-//			model.addAttribute("deptList", empService.getAllDeptId());
-//			model.addAttribute("message", "insert");
-//			return "hr/insert";
-//		}
-//		empService.insertEmp(emp);
-//		redirectAttributes.addFlashAttribute("message", "회원 저장 완료");
-//		return "redirect:/hr/list";
-//	}
-	
-	
 	
 	//수정 메서드
 	@GetMapping("/update")
@@ -114,7 +85,7 @@ public class EmpController {
 		model.addAttribute("manList", empService.getAllManagerId());
 		model.addAttribute("deptList", empService.getAllDeptId());
 		model.addAttribute("message", "update");
-		return "hr/insert";
+		return "hr/insertform";
 	}
 	
 	@PostMapping("/update")
@@ -130,8 +101,6 @@ public class EmpController {
 		return "error/runtime";
 	}
 	
-	
-	
 	//삭제 메서드
 	@GetMapping("/delete")
 	public String deleteEmp(int empId, Model model) {
@@ -145,11 +114,9 @@ public class EmpController {
 		return "redirect:/hr/list";
 	}
 	
-	//index
+	//인덱스 페이지
 	@RequestMapping("/index")
 	public void index(Model model) {}
-	
-	
 	
 	//JSON
 	@RequestMapping("/json/list")
