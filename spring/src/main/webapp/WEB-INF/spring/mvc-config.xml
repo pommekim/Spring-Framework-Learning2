@@ -33,6 +33,8 @@
 	
 	<context:component-scan base-package="study.spring.myapp.hr.controller" />
 	<context:component-scan base-package="study.spring.myapp.member.controller" />
+	<context:component-scan base-package="study.spring.myapp.file.controller" />
+	
 	
 	<mvc:interceptors>
   		<mvc:interceptor>
@@ -40,6 +42,13 @@
     		<bean class="study.spring.myapp.common.interceptor.LoginInterceptor" />
   		</mvc:interceptor>
 	</mvc:interceptors>
+	
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize">
+			<value>50000000</value>
+		</property>
+	</bean>
 	
 
 </beans>
