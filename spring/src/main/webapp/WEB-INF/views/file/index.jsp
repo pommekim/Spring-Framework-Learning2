@@ -9,7 +9,7 @@
 </head>
 <body>
 
-	<p><a href='<c:url value="/file/new" />'>업로드</a>
+	<p><a href='<c:url value="/file/new" />'>파일 업로드</a>
 	<p><a href='<c:url value="/file/list" />'>파일 전체 목록</a>
 	
 	<form action="" name="form">
@@ -19,9 +19,11 @@
 			<option value="/data">자료실
 			<option value="/spring">스프링
 			<option value="/general">공통
-		</select> <br>
+		</select>
 		<input type="submit" value="조회" id="form">
 	</form>
+	
+	<br>
 	
 	<form action='<c:url value="/file/info" />'>
 		파일 정보 조회 <br>

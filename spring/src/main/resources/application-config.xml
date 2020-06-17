@@ -23,8 +23,6 @@
 	</bean>
 	
 	
-	
-	
 	<context:property-placeholder location="classpath:db/jdbc.properties" />
 	
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
@@ -39,38 +37,21 @@
 	</bean>
 	
 	
-	
 	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
-	<!-- <tx:advice id="txAdvice" transaction-manager="txManager">
-		<tx:attributes>
-			<tx:method name="get*" read-only="true" />
-			<tx:method name="*" />
-		</tx:attributes>
-	</tx:advice>
-	
-	<aop:config>
-		<aop:pointcut id="txPointcut" expression="execution(* study.spring.myapp..*Service.*teEmp(..))" />
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" />
-	</aop:config> -->
 	
 	<tx:annotation-driven transaction-manager="txManager" />
-	
 	
 	
 	<context:component-scan base-package="study.spring.myapp" />
 	<aop:aspectj-autoproxy />
 	
 	
-	
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	
 	
-
-
-
 </beans>
 
 

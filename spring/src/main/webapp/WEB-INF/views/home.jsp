@@ -8,26 +8,21 @@
 </head>
 <body>
 <h1>
-	Hello world!  
+	HOME
 </h1>
 
-<P>  The time on the server is ${serverTime}. </P>
-
-
+<a href="member/insert">회원 가입</a> <br>
 <a href="hr/index">인사 관리</a> <br>
 
 <sec:authorize access="isAnonymous()">
-  <a href="login">로그인</a> <br>
+    <a href="login">로그인</a> <br>
 </sec:authorize>
 
 <sec:authorize access="isAuthenticated()">
-  <form action="logout" method="post">
-    <input type="submit" value="로그아웃">
-  </form>
+    <form action="logout" method="post">
+    	<input type="submit" value="로그아웃">
+    </form>
 </sec:authorize>
-
-<a href="member/insert">회원 가입</a>
-
 
 </body>
 </html>
