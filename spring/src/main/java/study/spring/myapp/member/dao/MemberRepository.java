@@ -114,6 +114,18 @@ public class MemberRepository implements IMemberRepository {
 		});
 	}
 
+	@Override
+	public void updateAuth(MemberVO member) {
+		String sql = "update authorities set authority=? where userid=(select userid from member where userid=?)";
+		jt.update(sql, member.getAuth(), member.getUserId());
+	}
+
+	@Override
+	public void updateEnabled(MemberVO member) {
+		String sql = "update member set enabled=? where userid=?";
+		jt.update(sql, member.getEnabled(), member.getUserId());
+	}
+
 	
 
 }

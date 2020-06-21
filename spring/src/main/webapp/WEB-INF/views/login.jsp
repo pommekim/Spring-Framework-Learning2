@@ -26,6 +26,7 @@
 		<a href="member/view?userId=${user_id}">마이 페이지</a> <br>
 		<a href="file">파일 업다운</a> <br>
 		<a href="hr/index">인사 관리</a> <br>
+		<a href="member/list">회원 정보 관리</a>
       
    	   	<form action="${pageContext.request.contextPath}/logout" method="post">
         	<input type="submit" value="로그아웃">

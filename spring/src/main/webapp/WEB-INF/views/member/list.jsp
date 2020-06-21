@@ -12,11 +12,11 @@
 	<h1>회원 리스트</h1>
 		<table border="1">
 			<tr>
-				<th>userId</th>
-				<th>name</th>
-				<th>email</th>
-				<th>address</th>
-				<th>authorities</th>
+				<th>아이디</th>
+				<th>이름</th>
+				<th>이메일</th>
+				<th>주소</th>
+				<th>권한</th>
 			<tr>
 			
 			<c:forEach var="mem" items="${memList}">
@@ -31,7 +31,7 @@
 		</table>
 		
 	<form action="<c:url value='/member/view' />">
-		<input type="text" name="userId">
+		아이디 : <input type="text" name="userId">
 		<input type="submit" value="검색">
 	</form>
 	

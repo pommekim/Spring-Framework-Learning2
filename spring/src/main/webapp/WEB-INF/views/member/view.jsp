@@ -28,7 +28,33 @@
 			<th>주소</th>
 			<td>${member.address}</td>
 		</tr>
+		<tr>
+			<th>권한</th>
+			<td>${member.authorities}</td>
+		</tr>
 	</table>
+	
+	<form action=enabled method=post>
+	<input name="userId" type=hidden value=${member.userId}>
+	<c:choose>
+		<c:when test="${member.enabled == true}">
+			<input type=submit value="비활성화">
+		</c:when>
+		<c:when test="${member.enabled == false}">
+			<input type=submit value="활성화">
+		</c:when>
+	</c:choose>
+	</form>
+	
+	<form action=auth method="post">
+	<input name="userId" type=hidden value=${member.userId}>
+		<select name="auth">
+			<option value="ROLE_USER">USER</option>
+			<option value="ROLE_ADMIN">ADMIN</option>
+			<option value="ROLE_MASTER">MASTER</option>
+		</select>
+		<input type="submit" value="권한변경">
+	</form>
 	
 	<a href="<c:url value='/member/update?userId=${member.userId}'/>">회원정보수정</a> <br>
 	

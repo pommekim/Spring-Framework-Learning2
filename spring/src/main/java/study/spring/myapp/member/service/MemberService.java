@@ -67,6 +67,16 @@ public class MemberService implements IMemberService {
 		return memberRepository.getMemberList();
 	}
 
+	@Override
+	public void updateAuth(MemberVO member) {
+		memberRepository.updateAuth(member);
+	}
+
+	@Override
+	public void updateEnabled(MemberVO member) {
+		memberRepository.updateEnabled(member);
+	}
+
 	
 
 }

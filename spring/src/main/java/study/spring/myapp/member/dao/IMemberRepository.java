@@ -16,5 +16,7 @@ public interface IMemberRepository {
 	void updateFile(String userId);
 	void deleteFile(String userId);
 	List<MemberVO> getMemberList();
+	void updateAuth(MemberVO member);
+	void updateEnabled(MemberVO member);
 
 }

@@ -50,14 +50,14 @@ public class MemberController {
 	}
 	
 	@GetMapping("/update")
-	public String update(String userId, Model model) {
+	public String updateMember(String userId, Model model) {
 		model.addAttribute("member", memberService.getMember(userId));
 		model.addAttribute("message", "update");
 		return "member/insert";
 	}
 	
 	@PostMapping("/update")
-	public String update(MemberVO member, Model model, RedirectAttributes redirectAttributes) {
+	public String updateMember(MemberVO member, Model model, RedirectAttributes redirectAttributes) {
 		member.setPassword(bpe.encode(member.getPassword()));
 		member.setEnabled(1);
 		memberService.updateMember(member);
@@ -66,19 +66,19 @@ public class MemberController {
 	}
 	
 	@GetMapping("/delete")
-	public String delete(String UserId, String password, Model model) {
+	public String deleteMember(String UserId, String password, Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String dbpw = memberService.getPassword(authentication.getName());
 		if(!bpe.matches(password, dbpw)) {
-			model.addAttribute("message", "wrong");
+			model.addAttribute("message", "no");
 			return "member/delete";
 		}
-		model.addAttribute("message", "right");
+		model.addAttribute("message", "ok");
 		return "member/delete";
 	}
 	
 	@PostMapping("/delete")
-	public String deleteMem(String userId, Model model, HttpSession session) {
+	public String deleteMember(String userId, Model model, HttpSession session) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		memberService.deleteMember(authentication.getName());
 		session.invalidate();
@@ -90,6 +90,26 @@ public class MemberController {
 		List<MemberVO> memList = memberService.getMemberList();
 		model.addAttribute("memList", memList);
 		return "member/list";
+	}
+	
+	@PostMapping("/auth")
+	public String updateAuth(String userId, String auth) {
+		MemberVO mem = memberService.getMember(userId);
+		mem.setAuth(auth);
+		memberService.updateAuth(mem);
+		return "redirect:/member/view?userId="+mem.getUserId();
+	}
+	
+	@RequestMapping("/enabled")
+	public String updateEnabled(String userId) {
+		MemberVO mem = memberService.getMember(userId);
+		if(mem.getEnabled() == 1) {
+			mem.setEnabled(0);
+		} else {
+			mem.setEnabled(1);
+		}
+		memberService.updateEnabled(mem);
+		return "redirect:/member/view?userId="+mem.getUserId();
 	}
 	
 	
