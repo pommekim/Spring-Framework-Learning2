@@ -30,6 +30,8 @@
    	   	<form action="${pageContext.request.contextPath}/logout" method="post">
         	<input type="submit" value="로그아웃">
       	</form>
+      	
+      	
     </sec:authorize>
 
   </body>

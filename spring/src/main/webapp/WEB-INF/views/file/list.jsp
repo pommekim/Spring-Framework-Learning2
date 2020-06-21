@@ -24,6 +24,7 @@
 			<td>유형</td>
 			<td>날짜</td>
 			<td>삭제</td>
+			<td>작성자</td>
 		</tr>
 		
 		<c:forEach var="file" items="${fileList}">
@@ -59,6 +60,8 @@
 			<td>
 				<a href='<c:url value="/file/delete/${file.fileId}" />' class="delete">삭제</a>
 			</td>
+			
+			<td>${file.userId}</td>
 		</tr>
 		
 		</c:forEach>

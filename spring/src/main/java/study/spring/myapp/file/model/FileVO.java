@@ -11,6 +11,7 @@ public class FileVO {
 	private String fileContentType;
 	private Timestamp fileUploadDate;
 	private byte[] fileData;
+	private String userId;
 	
 	public int getFileId() {
 		return fileId;
@@ -53,6 +54,12 @@ public class FileVO {
 	}
 	public void setFileData(byte[] fileData) {
 		this.fileData = fileData;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 	

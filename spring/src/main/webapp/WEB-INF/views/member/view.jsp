@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,10 +30,11 @@
 		</tr>
 	</table>
 	
-	<input type="submit" value="회원정보수정"> <br>
+	<a href="<c:url value='/member/update?userId=${member.userId}'/>">회원정보수정</a> <br>
 	
-	<form action="" method="post">
-		비밀번호 입력: <input type="password" name="pw">
+	<form action="<c:url value='/member/delete' />">
+		비밀번호 입력: <input type="password" name="password">
+		<input type="hidden" value="${member.userId}">
 		<input type="submit" value="회원탈퇴">
 	</form>
 	
