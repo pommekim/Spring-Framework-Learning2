@@ -10,29 +10,27 @@
   </head>
   
   <body>
+  
     <sec:authorize access="isAnonymous()">
+    <h1>LOGIN</h1>
     ${message}
       <form action="loginCheck" method="post">
         	아이디: <input type="text" name="id"> <br>
         	비밀번호: <input type="password" name="pw"> <br>
+        	<sec:csrfInput/>
         	<input type="submit" value="로그인">
       </form>
     </sec:authorize>
 
     <sec:authorize access="isAuthenticated()">
-    	<sec:authentication property="principal.username" var="user_id"/>
-    	<div id="user_id">${user_id}님 안녕하세요!</div>
+    	<sec:authentication property="principal.username"/>님 안녕하세요!<br>
     	
-		<a href="member/view?userId=${user_id}">마이 페이지</a> <br>
-		<a href="file">파일 업다운</a> <br>
-		<a href="hr/index">인사 관리</a> <br>
-		<a href="member/list">회원 정보 관리</a>
+		<a href="<c:url value="/hr/index" />">메인페이지</a>
       
    	   	<form action="${pageContext.request.contextPath}/logout" method="post">
+        	<sec:csrfInput/>
         	<input type="submit" value="로그아웃">
-      	</form>
-      	
-      	
+      	</form>	
     </sec:authorize>
 
   </body>

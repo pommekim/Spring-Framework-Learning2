@@ -8,13 +8,18 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-		
-	<mvc:view-controller path="/error/autherror" view-name="/error/autherror" />
+	
+	<mvc:annotation-driven>
+		<mvc:argument-resolvers>
+			<bean class="org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver"/>
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+	
+	<mvc:view-controller path="/" view-name="home"/>
+	<mvc:view-controller path="/login" view-name="login"/>
+	<mvc:view-controller path="/error/autherror" view-name="error/autherror"/>
 	<mvc:view-controller path="/error/loginDuplicate" view-name="/error/loginDuplicate" />
 	
-	
-	<mvc:annotation-driven />
-
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	
@@ -24,6 +29,17 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="basenames">
+			<list>
+				<value>classpath:i18n/hr</value>
+			</list>
+		</property>
+	</bean>
+	
+	
 	<mvc:resources location="/WEB-INF/resources/" mapping="/**" />
 	<mvc:resources location="/WEB-INF/resources/images/" mapping="/images/**" />
 	<mvc:resources location="/WEB-INF/resources/js/" mapping="/js/**" />
@@ -31,7 +47,6 @@
 	
 	<mvc:view-controller path="/" view-name="home" />
 	
-<!-- 	<mvc:view-controller path="/login" view-name="login" /> -->
 	
 	<context:component-scan base-package="study.spring.myapp.hr.controller" />
 	<context:component-scan base-package="study.spring.myapp.member.controller" />
@@ -45,12 +60,6 @@
   		</mvc:interceptor>
 	</mvc:interceptors>
 	
-	
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize">
-			<value>50000000</value>
-		</property>
-	</bean>
 	
 	<security:global-method-security secured-annotations="enabled" pre-post-annotations="enabled" />
 	

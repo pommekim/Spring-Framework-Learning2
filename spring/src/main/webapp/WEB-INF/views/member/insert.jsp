@@ -5,16 +5,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원 ${message}</title>
+<title>회원 ${message eq 'insert' ? '가입' : '정보 수정'}</title>
 </head>
 <body>
 
 	<h2>회원 ${message eq 'insert' ? '가입' : '정보 수정'}</h2>
-	<form action="<c:url value='/member/update' />" method="post">
+	
+	<form action="/myapp/member/${message eq 'insert' ? 'insert' : 'update'}" method="post">
+	
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		
 		<table border="1">
 			<tr>
 				<td>아이디</td>
-				<td><input type="text" name="userId" required value="${member.userId}" ${empty member ? "" : "readonly"}></td>
+				<td><input type="text" name="userId" value="${member.userId}" ${empty member ? "" : "readonly"}></td>
 			</tr>
 			<tr>
 				<td>이름</td>
@@ -36,8 +40,8 @@
 		
 		<input type="submit" value="${message eq 'insert' ? '입력' : '수정'}">
 		<input type="reset" value="취소">
+		
 	</form>
 	
-
 </body>
 </html>

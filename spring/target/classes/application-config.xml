@@ -25,6 +25,12 @@
 	</bean>
 	
 	
+	
+	<context:component-scan base-package="study.spring.myapp" />
+	<aop:aspectj-autoproxy />
+	
+	
+	
 	<context:property-placeholder location="classpath:db/jdbc.properties" />
 	
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
@@ -38,22 +44,43 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
-	
 	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
-	
 	<tx:annotation-driven transaction-manager="txManager" />
 	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize">
+			<value>50000000</value>
+		</property>
+	</bean>
 	
-	<context:component-scan base-package="study.spring.myapp" />
-	<aop:aspectj-autoproxy />
 	
 	
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	
+	<bean id="propertyConfigurer" class="org.jasypt.spring31.properties.EncryptablePropertyPlaceholderConfigurer">
+		<constructor-arg ref="configurationEncryptor" />
+		<property name="locations">
+			<list>
+				<value>classpath:/db/jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="environmentVariableConfiguration" class="org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig">
+		<property name="algorithm" value="PBEWithMD5AndDES"/>
+		<property name="passwordEnvName" value="APP_ENCRYPTION_PASSWORD"/>
+	</bean>
+
+	<bean id="configurationEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+		<property name="config" ref="environmentVariableConfiguration" />
+		<property name="password" value="djadudqja" />
+	</bean>
+	
 	<security:global-method-security secured-annotations="enabled" pre-post-annotations="enabled" />
+	
 	
 	
 </beans>

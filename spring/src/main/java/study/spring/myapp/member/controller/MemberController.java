@@ -5,7 +5,9 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -31,60 +33,74 @@ public class MemberController {
 	BCryptPasswordEncoder bpe;
 	
 	@GetMapping("/insert")
-	public void insert() {}
+	public void insert(Model model) {
+		model.addAttribute("message", "insert");
+	}
 	
 	@PostMapping("/insert")
 	public String insert(Model model, MemberVO member, RedirectAttributes redirectAttributes) {
 		member.setPassword(bpe.encode(member.getPassword()));
 		member.setEnabled(1);
 		memberService.insertMember(member);
-		model.addAttribute("message", "insert");
 		redirectAttributes.addFlashAttribute("message", "회원 가입 완료");
 		return "redirect:/login";
 	}
 	
-	@RequestMapping("/view")
-	public void getMember(String userId, Model model) {
-		MemberVO member = memberService.getMember(userId);
-		model.addAttribute("member", member);
+	
+	@PreAuthorize("isAuthenticated() and #userId==principal.username or hasAnyRole('ROLE_ADMIN','ROLE_MASTER')")
+	@GetMapping("/{userId}")
+	public String getMember(@PathVariable String userId, Model model) {
+		model.addAttribute("member", memberService.getMember(userId));
+		return "member/view";
 	}
 	
-	@GetMapping("/update")
-	public String updateMember(String userId, Model model) {
-		model.addAttribute("member", memberService.getMember(userId));
+	
+	@PreAuthorize("isAuthenticated() and #userId==principal.username or hasAnyRole('ROLE_ADMIN','ROLE_MASTER')")
+	@GetMapping("/update/{userId}")
+	public String update(Model model, @PathVariable String userId) {
+		MemberVO mem = memberService.getMember(userId);
+		model.addAttribute("member", mem);
 		model.addAttribute("message", "update");
 		return "member/insert";
 	}
 	
+	@PreAuthorize("isAuthenticated() and #userId==principal.username or hasAnyRole('ROLE_ADMIN','ROLE_MASTER')")
 	@PostMapping("/update")
-	public String updateMember(MemberVO member, Model model, RedirectAttributes redirectAttributes) {
-		member.setPassword(bpe.encode(member.getPassword()));
-		member.setEnabled(1);
-		memberService.updateMember(member);
-		redirectAttributes.addFlashAttribute("message", "회원 수정 완료");
-		return "redirect:/member/view?userId="+member.getUserId();
-	}
-	
-	@GetMapping("/delete")
-	public String deleteMember(String UserId, String password, Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String dbpw = memberService.getPassword(authentication.getName());
-		if(!bpe.matches(password, dbpw)) {
-			model.addAttribute("message", "no");
-			return "member/delete";
+	public String update(MemberVO mem, Authentication auth) {
+		if(auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))
+				|| auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_MASTER"))) {
+			
+		} else {
+			if(bpe.matches(mem.getPassword(), memberService.getPassword(mem.getUserId()))) {
+				
+			} else {
+				throw new RuntimeException("비밀번호가 다릅니다.");
+			}
 		}
-		model.addAttribute("message", "ok");
-		return "member/delete";
+		memberService.updateMember(mem);
+		return "redirect:/member/"+mem.getUserId();
 	}
 	
+	
+	@PreAuthorize("isAuthenticated() and #userId==principal.username or hasAnyRole('ROLE_ADMIN','ROLE_MASTER')")
 	@PostMapping("/delete")
-	public String deleteMember(String userId, Model model, HttpSession session) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		memberService.deleteMember(authentication.getName());
-		session.invalidate();
-		return "redirect:/";
+	public String delete(Authentication auth, String userId, String password) {
+		if(auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))
+				|| auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_MASTER"))) {
+			
+		}else {
+			if(bpe.matches(password, memberService.getPassword(userId))) {
+				
+			} else {
+				throw new RuntimeException("비밀번호가 다릅니다.");
+			}
+		}
+		memberService.deleteMember(userId);
+		return "redirect:/member/list";
 	}
 	
+	
+	@PreAuthorize("isAuthenticated() and hasAnyRole('ROLE_ADMIN','ROLE_MASTER')")
 	@RequestMapping("/list")
 	public String getAllMembers(Model model) {
 		List<MemberVO> memList = memberService.getMemberList();
@@ -92,14 +108,18 @@ public class MemberController {
 		return "member/list";
 	}
 	
+	
+	@PreAuthorize("isAuthenticated() and hasRole('ROLE_MASTER')")
 	@PostMapping("/auth")
 	public String updateAuth(String userId, String auth) {
 		MemberVO mem = memberService.getMember(userId);
 		mem.setAuth(auth);
 		memberService.updateAuth(mem);
-		return "redirect:/member/view?userId="+mem.getUserId();
+		return "redirect:/member/"+userId;
 	}
 	
+	
+	@PreAuthorize("isAuthenticated() and hasAnyRole('ROLE_ADMIN','ROLE_MASTER')")
 	@RequestMapping("/enabled")
 	public String updateEnabled(String userId) {
 		MemberVO mem = memberService.getMember(userId);
@@ -109,7 +129,7 @@ public class MemberController {
 			mem.setEnabled(1);
 		}
 		memberService.updateEnabled(mem);
-		return "redirect:/member/view?userId="+mem.getUserId();
+		return "redirect:/member/"+userId;
 	}
 	
 	

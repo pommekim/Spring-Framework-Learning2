@@ -58,7 +58,7 @@
 			<td>${file.fileUploadDate}</td>
 			
 			<td>
-				<a href='<c:url value="/file/delete/${file.fileId}" />' class="delete">삭제</a>
+				<a href='<c:url value="/file/delete/${file.fileId}?userId=${file.userId}" />' class="delete">삭제</a>
 			</td>
 			
 			<td>${file.userId}</td>
@@ -88,6 +88,17 @@
 			}
 		})
 	});
+	
+function addId() {
+	let check_length = document.getElementsByName("fileIds").length;
+	for(var i=0; i<check_length; i++) {
+		if(document.getElementsByName("fileIds")[i].checked == false) {
+			document.getElementsByName("userId")[i].disabled = "disabled";
+		}
+	}
+	return true;
+};
+
 </script>
 
 </body>
