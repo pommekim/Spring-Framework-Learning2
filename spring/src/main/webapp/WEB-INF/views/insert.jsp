@@ -53,16 +53,17 @@
 	
 	<script>
 		var check = false;
+		var id = $("#userId").val();
 		$(function() {
 			$("#loading").hide();
 			$("#checkBtn").on("click", function() {
 				if($("#userId").val()) {
 					$.ajax({
-						url : "member/check",
+						url : "/myapp/member/check",
 						type : "post",
 						headers : {"content-type":"application/json"},
 						dataType : "text",
-						data : {userId:$("#userId").val()},
+						data : {userId:id, "${_csrf.parameterName}":"${_csrf.token}"},
 						success : function(result) {
 							if(result) {
 								alert("아이디가 중복되지 않습니다.");

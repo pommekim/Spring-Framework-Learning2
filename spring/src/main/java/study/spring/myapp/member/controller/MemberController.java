@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -136,7 +137,7 @@ public class MemberController {
 	
 	@RequestMapping(value="/check", produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public boolean checkId(String userId) {
+	public boolean checkId(@RequestBody String userId) {
 		return memberService.checkId(userId);
 	}
 	
