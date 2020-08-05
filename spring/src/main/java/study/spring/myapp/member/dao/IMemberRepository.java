@@ -18,5 +18,6 @@ public interface IMemberRepository {
 	List<MemberVO> getMemberList();
 	void updateAuth(MemberVO member);
 	void updateEnabled(MemberVO member);
+	boolean checkId(String userId);
 
 }

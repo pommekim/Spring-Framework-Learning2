@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import study.spring.myapp.hr.model.EmpVO;
@@ -130,6 +131,13 @@ public class MemberController {
 		}
 		memberService.updateEnabled(mem);
 		return "redirect:/member/"+userId;
+	}
+	
+	
+	@RequestMapping(value="/check", produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public boolean checkId(String userId) {
+		return memberService.checkId(userId);
 	}
 	
 	

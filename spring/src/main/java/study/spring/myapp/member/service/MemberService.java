@@ -77,6 +77,11 @@ public class MemberService implements IMemberService {
 		memberRepository.updateEnabled(member);
 	}
 
+	@Override
+	public boolean checkId(String userId) {
+		return memberRepository.checkId(userId);
+	}
+
 	
 
 }

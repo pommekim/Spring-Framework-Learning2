@@ -126,6 +126,13 @@ public class MemberRepository implements IMemberRepository {
 		jt.update(sql, member.getEnabled(), member.getUserId());
 	}
 
+	@Override
+	public boolean checkId(String userId) {
+		String sql = "select count(*) from member where userid=?";
+		Integer i = jt.queryForNullableObject(sql, Integer.class, userId);
+		return (i == 0 ? true : false);
+	}
+
 	
 
 }
