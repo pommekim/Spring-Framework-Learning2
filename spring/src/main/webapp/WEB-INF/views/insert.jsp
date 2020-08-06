@@ -40,7 +40,7 @@
 			</tr>
 		</table>
 		
-		<input type="submit" value="입력">
+		<input type="submit" value="입력" id="submit">
 		<input type="reset" value="취소">
 	
 	</form>
@@ -53,17 +53,17 @@
 	
 	<script>
 		var check = false;
-		var id = $("#userId").val();
 		$(function() {
 			$("#loading").hide();
 			$("#checkBtn").on("click", function() {
 				if($("#userId").val()) {
 					$.ajax({
-						url : "/myapp/member/check",
+						async : "true",
+						url : "member/check",
 						type : "post",
-						headers : {"content-type":"application/json"},
-						dataType : "text",
-						data : {userId:id, "${_csrf.parameterName}":"${_csrf.token}"},
+						data : {userId : $("#userId").val(),
+							"${_csrf.parameterName}" : "${_csrf.token}"},
+						dataType : "json",
 						success : function(result) {
 							if(result) {
 								alert("아이디가 중복되지 않습니다.");
@@ -85,6 +85,16 @@
 				}
 				return false;
 			});
+			
+			
+			$("#submit").on("click", function() {
+				if(!check) {
+					alert("아이디 중복 검사를 해주세요.");
+					return false;
+				}
+			});
+			
+			
 		});
 		
 		
@@ -96,13 +106,6 @@
 			$("#loading").hide();
 		});
 		
-		
-		function check() {
-			if(!check) {
-				alert("아이디 중복 검사를 해주세요.");
-				return false;
-			}
-		}
 		
 	</script>
 	

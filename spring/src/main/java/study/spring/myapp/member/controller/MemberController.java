@@ -137,7 +137,7 @@ public class MemberController {
 	
 	@RequestMapping(value="/check", produces="application/json;charset=UTF-8")
 	@ResponseBody
-	public boolean checkId(@RequestBody String userId) {
+	public boolean checkId(String userId) {
 		return memberService.checkId(userId);
 	}
 	

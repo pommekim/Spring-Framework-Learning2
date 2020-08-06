@@ -129,8 +129,8 @@ public class MemberRepository implements IMemberRepository {
 	@Override
 	public boolean checkId(String userId) {
 		String sql = "select count(*) from member where userid=?";
-		Integer i = jt.queryForNullableObject(sql, Integer.class, userId);
-		return (i == 0 ? true : false);
+		Integer i = Integer.parseInt(String.valueOf(jt.queryForNullableObject(sql, Integer.class, userId)));
+		return i == 0 ? true : false;
 	}
 
 	
