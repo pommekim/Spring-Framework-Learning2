@@ -19,5 +19,28 @@
 	<mvc:view-controller path="/websocket/chat" view-name="chatView" />
 	
 	
+	<websocket:handlers>
+		<websocket:mapping handler="memoryMonitorHandler" path="/websocket/memorymonitor"/>
+	</websocket:handlers>
+	
+	<bean id="memoryMonitorHandler" class="study.spring.myapp.websocket.handler.MemoryMonitorHandler"/>
+	
+	<mvc:view-controller path="/websocket/display" view-name="websocket/display"/>
+	
+	
+	<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
+	
+	<websocket:handlers>
+		<websocket:mapping handler="multiChatRoomHandler" path="multichat/chat.do"/>
+		<websocket:sockjs />
+	</websocket:handlers>
+	
+	<bean id="multiChatRoomHandler" class="study.spring.myapp.websocket.handler.MultiChatRoomHandler" />
+	
+	
+	
+	
+	
+	
 
 </beans>
