@@ -34,7 +34,10 @@ public class ChatController implements IChatController {
 		model.addAttribute("size", getRoomSize(roomId));
 		return "multichat/room";
 	}
-
+	
+	@GetMapping("/new")
+	public void createName() {}
+	
 	@Override
 	@PostMapping("/newroom")
 	public String createRoom(String roomName) {

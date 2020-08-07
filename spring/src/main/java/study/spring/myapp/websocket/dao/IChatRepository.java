@@ -1,8 +1,6 @@
 package study.spring.myapp.websocket.dao;
 
 import java.util.List;
-import java.util.Map;
-
 import study.spring.myapp.websocket.model.ChattingRoom;
 
 public interface IChatRepository {

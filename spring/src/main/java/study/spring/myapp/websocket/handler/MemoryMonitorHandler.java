@@ -37,6 +37,7 @@ public class MemoryMonitorHandler extends TextWebSocketHandler implements Initia
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		Thread thread = new Thread() {
+			@Override
 			public void run() {
 				while(true) {
 					try {
