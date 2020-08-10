@@ -8,6 +8,6 @@ public interface IChatRepository {
 	List<ChattingRoom> loadAllRooms();
 	ChattingRoom selectRoom(int roomId);
 	ChattingRoom createChattingRoom(String name);
-	
+	void deleteChattingRoom(int roomId);
 
 }

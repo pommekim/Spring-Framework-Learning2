@@ -87,6 +87,16 @@
 				}));
 				ws.close();
 				
+				
+				if(ws == null) {
+					alert("채팅 기록이 모두 삭제됩니다. 정말로 나가시겠습니까?");
+					var xhr = new XMLHttpRequest();
+					xhr.open('get', '/myapp/multichat/delete?roomId=${room.roomId}');
+					xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+					xhr.send();
+				}
+				
+				
 				var xhr = new XMLHttpRequest();
 				xhr.open('get', '/myapp/multichat/roomsize?roomId=${room.roomId}');
 				xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded; charset=UTF-8");

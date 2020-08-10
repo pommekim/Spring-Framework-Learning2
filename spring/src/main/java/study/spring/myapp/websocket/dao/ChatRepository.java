@@ -34,5 +34,14 @@ public class ChatRepository implements IChatRepository {
 		return room;
 	}
 
+	@Override
+	public void deleteChattingRoom(int roomId) {
+		roomMap.remove(roomId);
+	}
+
+	
+	
+	
+
 
 }
