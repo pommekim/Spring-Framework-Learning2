@@ -24,6 +24,7 @@ public class EmpRepository implements IEmpRepository {
 	
 	public class EmpMapper implements RowMapper<EmpVO> {
 		
+		@Override
 		public EmpVO mapRow(ResultSet rs, int count) throws SQLException {
 			
 			EmpVO emp = new EmpVO();
@@ -124,6 +125,7 @@ public class EmpRepository implements IEmpRepository {
 	
 	
 	
+	@Override
 	public DeptVO getDeptInfo(int deptId) {
 		String sql = "select * from departments where department_id=?";
 		return jdbcTemplate.queryForObject(sql,

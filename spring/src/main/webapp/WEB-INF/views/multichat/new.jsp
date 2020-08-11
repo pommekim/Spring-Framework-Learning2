@@ -13,7 +13,7 @@
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 		채팅방 이름 : <input type="text" name="roomName"><br>
 		<button type="submit">생성</button>
-		<button onclick="location.href='/'">뒤로</button>
+		<button type="button" onclick="location.href='/myapp/multichat'">뒤로</button>
 	</form>
 
 </body>

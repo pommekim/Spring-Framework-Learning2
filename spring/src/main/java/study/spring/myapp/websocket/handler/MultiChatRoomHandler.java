@@ -33,5 +33,4 @@ public class MultiChatRoomHandler extends TextWebSocketHandler {
 	}
 	
 	
-	
 }

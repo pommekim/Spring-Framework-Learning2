@@ -3,8 +3,6 @@ package study.spring.myapp.websocket.model;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -34,6 +32,7 @@ public class ChattingRoom {
 	public int getSize() {
 		return this.sessions.size();
 	}
+	
 	
 	public static ChattingRoom createRoom(String name) {
 		ChattingRoom room = new ChattingRoom();

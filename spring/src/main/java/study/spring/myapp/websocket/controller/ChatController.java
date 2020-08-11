@@ -14,19 +14,17 @@ import study.spring.myapp.websocket.model.ChattingRoom;
 
 @Controller
 @RequestMapping("/multichat")
-public class ChatController implements IChatController {
+public class ChatController {
 	
 	@Autowired
 	private ChatRepository chatRepository;
 	
-	@Override
 	@GetMapping({"", "/rooms"})
 	public String getRoomList(Model model) {
 		model.addAttribute("rooms", chatRepository.loadAllRooms());
 		return "multichat/roomlist";
 	}
 
-	@Override
 	@GetMapping("/room/{roomId}")
 	public String getRoom(@PathVariable int roomId, Model model) {
 		ChattingRoom room = chatRepository.selectRoom(roomId);
@@ -34,19 +32,26 @@ public class ChatController implements IChatController {
 		model.addAttribute("size", getRoomSize(roomId));
 		return "multichat/room";
 	}
-
-	@Override
+	
+	@GetMapping("/new")
+	public void createName() {}
+	
 	@PostMapping("/newroom")
 	public String createRoom(String roomName) {
 		chatRepository.createChattingRoom(roomName);
 		return "redirect:rooms";
 	}
 
-	@Override
 	@GetMapping("/roomsize")
 	@ResponseBody
 	public int getRoomSize(int roomId) {
 		return chatRepository.selectRoom(roomId).getSize();
+	}
+	
+	@GetMapping("/delete")
+	@ResponseBody
+	public void deleteRoom(int roomId) {
+		chatRepository.deleteChattingRoom(roomId);
 	}
 
 }

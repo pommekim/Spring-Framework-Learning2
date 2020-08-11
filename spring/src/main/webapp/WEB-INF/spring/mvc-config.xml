@@ -50,6 +50,7 @@
 	<context:component-scan base-package="study.spring.myapp.hr.controller" />
 	<context:component-scan base-package="study.spring.myapp.member.controller" />
 	<context:component-scan base-package="study.spring.myapp.file.controller" />
+	<context:component-scan base-package="study.spring.myapp.websocket.controller" />
 	
 	
 	<mvc:interceptors>
