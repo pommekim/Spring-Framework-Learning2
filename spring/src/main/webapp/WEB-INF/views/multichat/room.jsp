@@ -25,6 +25,7 @@
 		var ws;
 		var nickname;
 		var roomId = ${room.roomId};
+		var size = ${size};
 		
 		$("#inputnickname").on("click", function() {
 			nickname = $("#nickname").val();
@@ -88,32 +89,31 @@
 				ws.close();
 				
 				
-				if(ws == null) {
-					alert("채팅 기록이 모두 삭제됩니다. 정말로 나가시겠습니까?");
-					var xhr = new XMLHttpRequest();
-					xhr.open('get', '/myapp/multichat/delete?roomId=${room.roomId}');
-					xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded; charset=UTF-8");
-					xhr.send();
-				}
-				
-				
-				var xhr = new XMLHttpRequest();
-				xhr.open('get', '/myapp/multichat/roomsize?roomId=${room.roomId}');
-				xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded; charset=UTF-8");
-
-				xhr.send();
-				
-				xhr.onreadystatechange = function() {
-					if(xhr.readyState === xhr.DONE) {
-						if(xhr.status === 200 || xhr.status === 201) {
-							$("#size").text("방 인원 : " + xhr.responseText);
+				ws.onclose = function() {
+					if(size >= 1) {
+						var xhr = new XMLHttpRequest();
+						xhr.open('get', '/myapp/multichat/roomsize?roomId=${room.roomId}');
+						xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+						xhr.send();
+						
+						xhr.onreadystatechange = function() {
+							if(xhr.readyState === xhr.DONE) {
+								if(xhr.status === 200 || xhr.status === 201) {
+									$("#size").text("방 인원 : " + xhr.responseText);
+								}
+							}
 						}
+					} else if(size == 0) {
+						alert("채팅 기록이 모두 삭제됩니다. 정말로 나가시겠습니까?");
+						var xhr = new XMLHttpRequest();
+						xhr.open('get', '/myapp/multichat/delete?roomId=${room.roomId}');
+						xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+						xhr.send();
 					}
 				}
 			}
-			location.href='/myapp/multichat';
+			opener.location.reload();
 		});
-		
 		
 		
 		

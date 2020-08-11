@@ -48,9 +48,10 @@ public class ChatController {
 		return chatRepository.selectRoom(roomId).getSize();
 	}
 	
-	@GetMapping("/delete/{roomId}")
+	@GetMapping("/delete")
 	@ResponseBody
-	public void deleteRoom(@PathVariable int roomId) {
+	public void deleteRoom(int roomId) {
+		System.out.println("여기까진?");
 		chatRepository.deleteChattingRoom(roomId);
 	}
 

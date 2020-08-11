@@ -33,6 +33,7 @@ public class ChattingRoom {
 		return this.sessions.size();
 	}
 	
+	
 	public static ChattingRoom createRoom(String name) {
 		ChattingRoom room = new ChattingRoom();
 		ChattingRoom.roomIds.add(ChattingRoom.roomIds.size()+1);
