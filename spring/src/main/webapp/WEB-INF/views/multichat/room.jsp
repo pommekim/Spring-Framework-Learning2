@@ -89,43 +89,37 @@
 					user : nickname
 				}));
 				ws.close();
-				
-				ws.onclose = function() {
-					if(size >= 1) {
-						var xhr = new XMLHttpRequest();
-						xhr.open('get', '/myapp/multichat/roomsize?roomId=${room.roomId}');
-						xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded; charset=UTF-8");
-						xhr.send();
-						
-						xhr.onreadystatechange = function() {
-							if(xhr.readyState === xhr.DONE) {
-								if(xhr.status === 200 || xhr.status === 201) {
-									$("#size").text("방 인원 : " + xhr.responseText);
-								}
+			}
+			
+			ws.onclose = function() {
+				if(size >= 2) {
+					var xhr = new XMLHttpRequest();
+					xhr.open('get', '/myapp/multichat/roomsize?roomId=${room.roomId}');
+					xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+					xhr.send();
+					
+					xhr.onreadystatechange = function() {
+						if(xhr.readyState === xhr.DONE) {
+							if(xhr.status === 200 || xhr.status === 201) {
+								$("#size").text("방 인원 : " + xhr.responseText);
 							}
 						}
-						location.href="<c:url value='/multichat' />";
-						
-					} else if(size == 0) {
-						var confirmFlag = confirm("채팅 기록이 모두 삭제됩니다. 정말로 나가시겠습니까?");
-						if(confirmFlag) {
-							var xhr = new XMLHttpRequest();
-							xhr.open('get', '/myapp/multichat/delete?roomId=${room.roomId}');
-							xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded; charset=UTF-8");
-							xhr.send();
-							
-							setTimeout(function() {
-								window.location.href="<c:url value='/multichat' />";
-							}, 1000);
-							
-						} else {
-							alert("취소하셨습니다. 다시 입장해 주세요.");
-							location.reload();
-						}
 					}
+					
+				} else if(size == 1) {
+					var xhr = new XMLHttpRequest();
+					xhr.open('get', '/myapp/multichat/delete?roomId=${room.roomId}');
+					xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+					xhr.send();
 				}
+				
+				setTimeout(function() {
+					window.location.href="<c:url value='/multichat' />";
+				}, 1000);
+				
 			}
 		});
+		
 		
 		
 	</script>

@@ -53,5 +53,7 @@ public class ChatController {
 	public void deleteRoom(int roomId) {
 		chatRepository.deleteChattingRoom(roomId);
 	}
+	
+	
 
 }
