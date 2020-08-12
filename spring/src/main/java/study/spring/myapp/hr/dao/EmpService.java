@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import study.spring.myapp.hr.model.DeptVO;
@@ -13,6 +14,7 @@ import study.spring.myapp.hr.model.EmpVO;
 public class EmpService implements IEmpService {
 	
 	@Autowired
+	@Qualifier("IEmpRepository")
 	IEmpRepository empRepository;
 
 	@Override
