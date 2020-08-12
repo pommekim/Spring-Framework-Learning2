@@ -36,13 +36,9 @@ public class ChatRepository implements IChatRepository {
 
 	@Override
 	public void deleteChattingRoom(int roomId) {
-		System.out.println("여기까진 왔냐");
 		roomMap.remove(roomId);
 	}
 
-	
-	
-	
 
 
 }

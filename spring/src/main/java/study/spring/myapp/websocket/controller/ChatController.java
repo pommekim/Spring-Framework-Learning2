@@ -51,8 +51,9 @@ public class ChatController {
 	@GetMapping("/delete")
 	@ResponseBody
 	public void deleteRoom(int roomId) {
-		System.out.println("여기까진?");
 		chatRepository.deleteChattingRoom(roomId);
 	}
+	
+	
 
 }
