@@ -4,8 +4,7 @@
 
 <mapper namespace="study.spring.myapp.hr.dao.IEmpRepository">
 
-	<resultMap id="empMap"
-		type="study.spring.myapp.hr.model.EmpVO">
+	<resultMap id="empMap" type="study.spring.myapp.hr.model.EmpVO">
 		<result property="employeeId" column="employee_id" />
 		<result property="firstName" column="first_name" />
 		<result property="lastName" column="last_name" />
@@ -48,11 +47,29 @@
 		in (select distinct manager_id from employees)
 	</select>
 
-
-
-
-
-
+	<update id="updateEmp" parameterType="study.spring.myapp.hr.model.EmpVO">
+		update employees
+		set first_name=#{firstName}, last_name=#{lastName}, phone_number=#{phoneNumber},
+		hire_date=#{hireDate}, job_id=#{jobId}, salary=#{salary}, commission_pct=#{commissionPct},
+		manager_id=#{managerId}, department_id=#{departmentId}
+		where employee_id=#{employeeId}
+	</update>
+	
+	<insert id="insertEmp" parameterType="study.spring.myapp.hr.model.EmpVO">
+		insert into employees
+		values (#{employeeId}, #{firstName}, #{lastName}, #{email}, #{phoneNumber},
+		SYSDATE, #{jobId}, #{salary}, #{commissionPct}, #{managerId}, #{departmentId})
+	</insert>
+	
+	<delete id="deleteEmp">
+		delete from employees
+		where employee_id=#{empId}
+	</delete>
+	
+	<delete id="deleteJobHistory" parameterType="int">
+		delete from job_history
+		where employee_id=#{empId}
+	</delete>
 
 
 
